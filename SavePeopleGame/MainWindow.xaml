@@ -5,16 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SavePeopleGame"
         mc:Ignorable="d"
-        Title="Ratuj Ludzi" Height="600" Width="900">
+        Title="Ratuj Ludzi" Height="900" Width="1500">
     <Window.Resources>
-        <ControlTemplate x:Key="EnemyTemplate.IDE" TargetType="{x:Type ContentControl}">
+        <ControlTemplate x:Key="EnemyTemplate" TargetType="{x:Type ContentControl}">
             <Grid>
-                <Ellipse Height="100" Stroke="#FFF05D5D" Width="100" Fill="#FFF05D5D"/>
+                <Ellipse Height="100" Stroke="#FFF70D0D" Width="100" Fill="#FFF70D0D"/>
             </Grid>
         </ControlTemplate>
     </Window.Resources>
 
-    <Grid>
+    <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
             <RowDefinition />
@@ -28,12 +28,12 @@
         </Grid.ColumnDefinitions>
         <Button x:Name="startButton" Content="Start!" Grid.Row="2"
                 HorizontalAlignment="Center" VerticalAlignment="Center" 
-                Click="Button_Click"/>
+                Click="startButton_Click"/>
 
         <StackPanel Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Ich unikaj" FontSize="22"
-                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ContentControl Template="{DynamicResource EnemyTemplate.IDE}" Content="ContentControl"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+            <ContentControl Template="{DynamicResource EnemyTemplate}" Content="ContentControl"
                             HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </StackPanel>
         <ProgressBar Grid.Column="1" Grid.Row="2" Height="20"/>
@@ -50,10 +50,9 @@
             </StackPanel>
             <TextBlock x:Name="gameOverText" Text="Koniec gry" FontFamily="Arial Black" 
                        FontSize="100" FontWeight="Bold" FontStyle="Italic" 
-                       Canvas.Left="175" Canvas.Top="85" 
-                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Rectangle x:Name="target" Height="50" Canvas.Left="655" Stroke="#FF706969" 
-                       Canvas.Top="85" Width="50" Fill="#FFC5C5C5" RenderTransformOrigin="0.5,0.5">
+                       Canvas.Left="453" Canvas.Top="235" Foreground="White" HorizontalAlignment="Center"/>
+            <Rectangle x:Name="target" Height="50" Canvas.Left="1175" Stroke="#FF706969" 
+                       Canvas.Top="169" Width="50" Fill="#FFC5C5C5" RenderTransformOrigin="0.5,0.5">
                 <Rectangle.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
