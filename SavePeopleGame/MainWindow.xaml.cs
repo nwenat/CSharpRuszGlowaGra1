@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace SavePeopleGame
 {
@@ -19,14 +20,62 @@ namespace SavePeopleGame
     public partial class MainWindow : Window
     {
         Random random = new Random();
+        DispatcherTimer enemyTimer = new DispatcherTimer();
+        DispatcherTimer targetTimer = new DispatcherTimer();
+        bool humanCapture = false;
         public MainWindow()
         {
             InitializeComponent();
+
+            enemyTimer.Tick += enemyTimer_Tick;
+            enemyTimer.Interval = TimeSpan.FromSeconds(2);
+
+            targetTimer.Tick += targetTimer_Tick;
+            targetTimer.Interval = TimeSpan.FromSeconds(1);
+        }
+
+        private void targetTimer_Tick(object sender, EventArgs e)
+        {
+            progressBar.Value += 1;
+            if(progressBar.Value >= progressBar.Maximum)
+            {
+                EndTheGame();
+            }
+        }
+
+        private void EndTheGame()
+        {
+            if(!playArea.Children.Contains(gameOverText))
+            {
+                enemyTimer.Stop();
+                targetTimer.Stop();
+                humanCapture = false;
+                startButton.Visibility = Visibility.Visible;
+                playArea.Children.Add(gameOverText);
+            }
+        }
+
+        private void enemyTimer_Tick(object sender, EventArgs e)
+        {
+            AddEnemy();
         }
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            AddEnemy();
+            StartGame();
+        }
+
+        private void StartGame()
+        {
+            human.IsHitTestVisible = true;
+            humanCapture = false;
+            progressBar.Value = 0;
+            startButton.Visibility = Visibility.Collapsed;
+            playArea.Children.Clear();
+            playArea.Children.Add(target);
+            playArea.Children.Add(human);
+            enemyTimer.Start();
+            targetTimer.Start();
         }
 
         private void AddEnemy()
@@ -51,6 +100,28 @@ namespace SavePeopleGame
             Storyboard.SetTargetProperty(animation, new PropertyPath(propertyToAnimete));
             storyboard.Children.Add(animation);
             storyboard.Begin();
+        }
+
+        private void human_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(enemyTimer.IsEnabled)
+            {
+                humanCapture = true;
+                human.IsHitTestVisible = false;
+            }
+        }
+
+        private void Rectangle_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if(targetTimer.IsEnabled && humanCapture)
+            {
+                Canvas.SetLeft(target, random.Next(100, (int)playArea.ActualWidth - 100));
+                Canvas.SetTop(target, random.Next(100, (int)playArea.ActualHeight - 100));
+                Canvas.SetLeft(human, random.Next(100, (int)playArea.ActualWidth - 100));
+                Canvas.SetTop(human, random.Next(100, (int)playArea.ActualHeight - 100));
+                humanCapture = false;
+                human.IsHitTestVisible = true;
+            }
         }
     }
 }
