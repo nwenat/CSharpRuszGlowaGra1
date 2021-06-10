@@ -5,7 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SavePeopleGame"
         mc:Ignorable="d"
-        Title="SavePeople" Height="450" Width="800">
+        Title="Ratuj Ludzi" Height="600" Width="900">
+    <Window.Resources>
+        <ControlTemplate x:Key="EnemyTemplate.IDE" TargetType="{x:Type ContentControl}">
+            <Grid>
+                <Ellipse Height="100" Stroke="#FFF05D5D" Width="100" Fill="#FFF05D5D"/>
+            </Grid>
+        </ControlTemplate>
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -19,13 +26,44 @@
             <ColumnDefinition />
             <ColumnDefinition Width="160"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="startButton" Content="Start!" HorizontalAlignment="Left" Margin="80,80,0,0" Grid.Row="2" VerticalAlignment="Top" Click="Button_Click"/>
-        <TextBlock Grid.Column="2" HorizontalAlignment="Center" Grid.Row="2" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Center"/>
-        <ProgressBar Grid.Column="1" HorizontalAlignment="Left" Height="10" Margin="90,90,0,0" Grid.Row="2" VerticalAlignment="Top" Width="100"/>
-        <ContentControl Content="ContentControl" Grid.Column="2" HorizontalAlignment="Center" Margin="0,120,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-        <Canvas Grid.Column="1" Grid.Row="1"/>
+        <Button x:Name="startButton" Content="Start!" Grid.Row="2"
+                HorizontalAlignment="Center" VerticalAlignment="Center" 
+                Click="Button_Click"/>
 
-
+        <StackPanel Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Ich unikaj" FontSize="22"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <ContentControl Template="{DynamicResource EnemyTemplate.IDE}" Content="ContentControl"
+                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </StackPanel>
+        <ProgressBar Grid.Column="1" Grid.Row="2" Height="20"/>
+        <Canvas x:Name="playArea" Grid.Row="1" Grid.ColumnSpan="3">
+            <Canvas.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF323C01"/>
+                    <GradientStop Color="#FF0EFF03" Offset="1"/>
+                </LinearGradientBrush>
+            </Canvas.Background>
+            <StackPanel x:Name="human">
+                <Ellipse Height="10" Stroke="White" Width="10" Fill="White"/>
+                <Rectangle Height="25" Stroke="White" Width="10" Fill="White"/>
+            </StackPanel>
+            <TextBlock x:Name="gameOverText" Text="Koniec gry" FontFamily="Arial Black" 
+                       FontSize="100" FontWeight="Bold" FontStyle="Italic" 
+                       Canvas.Left="175" Canvas.Top="85" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Rectangle x:Name="target" Height="50" Canvas.Left="655" Stroke="#FF706969" 
+                       Canvas.Top="85" Width="50" Fill="#FFC5C5C5" RenderTransformOrigin="0.5,0.5">
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="45"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+        </Canvas>
 
     </Grid>
 
