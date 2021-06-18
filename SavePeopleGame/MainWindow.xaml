@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SavePeopleGame"
         mc:Ignorable="d"
-        Title="Ratuj Ludzi" Height="900" Width="1500">
+        Title="Ratuj Ludzi" Height="900" Width="1200">
     <Window.Resources>
         <ControlTemplate x:Key="EnemyTemplate" TargetType="{x:Type ContentControl}">
             <Grid>
@@ -26,6 +26,17 @@
             <ColumnDefinition />
             <ColumnDefinition Width="160"/>
         </Grid.ColumnDefinitions>
+        <Grid x:Name="grid" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!--<Button x:Name="backButton" Click="GoBack" 
+                    IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" 
+                    />-->
+            <TextBlock x:Name="pageTitle" Grid.Column="1" 
+                       Text="Ratuj ludzi"/>
+        </Grid>
         <Button x:Name="startButton" Content="Start!" Grid.Row="2"
                 HorizontalAlignment="Center" VerticalAlignment="Center" 
                 Click="startButton_Click"/>
@@ -37,8 +48,8 @@
                             HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </StackPanel>
         <ProgressBar x:Name="progressBar" Grid.Column="1" Grid.Row="2" Height="20"/>
-        <Canvas x:Name="playArea" Grid.Row="1" Grid.ColumnSpan="3">
-            
+        <Canvas x:Name="playArea" Grid.Row="1" Grid.ColumnSpan="3" MouseMove="playArea_MouseMove" MouseLeave="playArea_MouseLeave">
+
             <Canvas.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF323C01"/>
@@ -47,13 +58,13 @@
             </Canvas.Background>
             <StackPanel x:Name="human" MouseDown="human_MouseDown">
                 <Ellipse Height="10" Stroke="White" Width="10" Fill="White"/>
-                <Rectangle Height="25" Stroke="White" Width="10" Fill="White" MouseEnter="Rectangle_MouseEnter"/>
+                <Rectangle Height="25" Stroke="White" Width="10" Fill="White"/>
             </StackPanel>
             <TextBlock x:Name="gameOverText" Text="Koniec gry" FontFamily="Arial Black" 
                        FontSize="100" FontWeight="Bold" FontStyle="Italic" 
-                       Canvas.Left="453" Canvas.Top="235" Foreground="White" HorizontalAlignment="Center"/>
-            <Rectangle x:Name="target" Height="50" Canvas.Left="1175" Stroke="#FF706969" 
-                       Canvas.Top="169" Width="50" Fill="#FFC5C5C5" RenderTransformOrigin="0.5,0.5">
+                       Canvas.Left="303" Canvas.Top="235" Foreground="White"/>
+            <Rectangle x:Name="target" Height="50" Canvas.Left="970" Stroke="#FF706969" 
+                       Canvas.Top="143" Width="50" Fill="#FFC5C5C5" RenderTransformOrigin="0.5,0.5" MouseEnter="target_MouseEnter">
                 <Rectangle.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
